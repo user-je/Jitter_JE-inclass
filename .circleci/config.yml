@@ -1,0 +1,31 @@
+version: 2.1
+
+orbs:
+  ruby: circleci/ruby@1.1.0
+
+jobs:
+    setup:
+      docker:
+        - image: cimg/ruby:3.0.3
+      steps:
+        - checkout
+        - ruby/install-deps
+    test:
+      docker:
+        - image: cimg/ruby:3.0.3
+      steps:
+      - checkout
+      - run: bundle check || bundle install
+      - run:
+          command: bundle exec rake test
+          when: always
+
+      
+workflows:
+  version: 2
+  setup_and_test:
+    jobs:
+      - setup
+      - test:
+          requires:
+            - setup
