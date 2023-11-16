@@ -46,3 +46,4 @@ class JitsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to jits_url
   end
 end
+
